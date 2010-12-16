@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_webmoney'
-  s.version     = '0.0.1'
+  s.version     = '1.0.0'
   s.summary     = 'Add gem summary here'
   s.description = 'Add webmoney support for spree'
   s.required_ruby_version = '>= 1.8.7'

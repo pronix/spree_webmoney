@@ -1,0 +1,10 @@
+---
+ru-RU:
+  webmoney:
+    details_of_payment: 'Оплата заказа %{order_number}'
+    pay: Оплата WebMoney
+    success_url: Success URL
+    result_url: Result URL
+    fail_url: Fail URL
+  secret: Секетный ключ
+  wallet: Кошелек

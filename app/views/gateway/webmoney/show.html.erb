@@ -1,0 +1,24 @@
+<% content_for :page_title do %>
+<h1 class="font-41 black"><%= t("webmoney.pay")%></h1>
+<% end %>
+<%= form_tag "https://merchant.webmoney.ru/lmi/payment.asp", :method => "POST" do %>
+<%= hidden_field_tag(:LMI_PAYEE_PURSE, @gateway.options[:wallet]) %>
+<%= hidden_field_tag(:LMI_PAYMENT_AMOUNT, @order.total)%>
+<%= hidden_field_tag(:LMI_SIM_MODE, 0) if @gateway.test? %>
+<%= hidden_field_tag(:LMI_PAYMENT_NO, @order.id)%>
+<%= hidden_field_tag(:LMI_PAYMENT_DESC_BASE64, [I18n.t("webmoney.details_of_payment", :order_number => @order.number)].pack("m")) %>
+<h1 class="font-41 black"><%= "#{t('order')} #{@order.number}" %></h1>
+<%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
+
+<div class="clear"></div>
+<div class="font-41">&nbsp;</div>
+<button style="margin-left: 350px;" class="button_buy left" href="">
+  <span class="left_b"></span>
+  <span class="line_b">
+    <span class="text_z_1"><%=t("pay") %></span>
+    <span class="text_z_2"><%=t("pay") %></span>
+  </span>
+  <span class="right_b"></span>
+</button>
+<div class="clear"></div>
+<% end %>
