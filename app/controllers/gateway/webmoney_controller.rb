@@ -4,7 +4,7 @@ class Gateway::WebmoneyController < Spree::BaseController
   before_filter :valid_payment,                  :only => [:result]
 
   def show
-    @order = Order.unscoped{ Order.find(params[:order_id]) }
+    @order =  Order.find(params[:order_id])
     @gateway = @order.available_payment_methods.find{|x| x.id == params[:gateway_id].to_i }
     @order.payments.destroy_all
     payment = @order.payments.create!(:amount => 0,  :payment_method_id => @gateway.id)
@@ -30,7 +30,7 @@ class Gateway::WebmoneyController < Spree::BaseController
   end
 
   def success
-    @order = Order.unscoped{ Order.find_by_id(@payment_params[:payment_no]) }
+    @order =  Order.find_by_id(@payment_params[:payment_no])
     if @order && @order.complete?
       session[:order_id] = nil
       redirect_to order_path(@order)
@@ -41,7 +41,7 @@ class Gateway::WebmoneyController < Spree::BaseController
   end
 
   def fail
-    @order = Order.unscoped{ Order.find_by_id(@payment_params[:payment_no]) }
+    @order = Order.find_by_id(@payment_params[:payment_no])
     flash.now[:error] = t("payment_fail")
     redirect_to @order.blank? ? root_url : edit_order_checkout_url(@order, :step => "payment")
       return
@@ -61,7 +61,7 @@ class Gateway::WebmoneyController < Spree::BaseController
 
 
   def valid_payment
-    @order = Order.unscoped{ Order.find_by_id(@payment_params[:payment_no]) }
+    @order =  Order.find_by_id(@payment_params[:payment_no])
     @gateway = @order.payments.first.payment_method
 
     raise "invalid gateway" unless @gateway
@@ -91,7 +91,5 @@ class Gateway::WebmoneyController < Spree::BaseController
                              payment_params[:payer_purse],    payment_params[:payer_wm]
                             ].join("")).upcase
   end
-
-
 
 end
