@@ -11,7 +11,6 @@ module SpreeWebmoney
         Rails.env.production? ? require(c) : load(c)
       end
       Gateway::Webmoney.register
-      CheckoutController.send     :include, Overload::Controller::CheckoutsModule
     end
 
     config.to_prepare &method(:activate).to_proc
